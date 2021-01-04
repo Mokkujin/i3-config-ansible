@@ -93,11 +93,11 @@ my special keybindings are:
 
 | Keybinding                  | Function                     |
 | --------------------------- | -------------------------- |
-| <kbd>super</kbd> + <kpd>home</kbp> | show menu in i3block for shutdown logon ... |
-| <kbd>super</kbd> + <kbd>Ctrl</kpd> + <kpd>c</kpd> | run gnome control center |
-| <kbd>super</kbd> + <kbd>l</kpd> | lock screen |
-| <kbd>super</kbd> + <kbd>-</kpd> | decrease i3gaps width between |
-| <kbd>super</kbd> + <kbd>+</kpd> | increase i3gaps width between |
+| <kbd>super</kbd> + <kbd>home</kbp> | show menu in i3block for shutdown logon ... |
+| <kbd>super</kbd> + <kbd>Ctrl</kbd> + <kbd>c</kbd> | run gnome control center |
+| <kbd>super</kbd> + <kbd>l</kbd> | lock screen |
+| <kbd>super</kbd> + <kbd>-</kbd> | decrease i3gaps width between |
+| <kbd>super</kbd> + <kbd>+</kbd> | increase i3gaps width between |
 
 you can run a grep command on the final file (client not host) to see all keybindigs :-)
 ```bash
