@@ -51,15 +51,23 @@
 
 - name: Enable nm-applet in i3
   become: no
-  lineinfile:
-    dest: ~/.config/i3/config
-    line: "exec --no-startup-id dbus-launch nm-applet #nmapplet startup !! DO NOT REMOVE COMMENT !!"
+  blockinfile:
+    path: ~/.config/i3/config
+    marker: "# - {mark} - Network Manager Applet"
+    insertbefore: '^(.*)END(.*)$'
+    block: |
+     # ! do not remove !
+     exec --no-startup-id dbus-launch nm-applet
 
 - name: Enable pasystray in i3
   become: no
-  lineinfile:
-    dest: ~/.config/i3/config
-    line: "exec --no-startup-id dbus-launch /usr/bin/pasystray #pasystray startup !! DO NOT REMOVE COMMENT !!"
+  blockinfile:
+    path: ~/.config/i3/config
+    marker: "# - {mark} - PASYSTRAY Applet for Pulseaudio"
+    insertbefore: '^(.*)END(.*)$'
+    block: |
+     #  ! do not remove !
+     exec --no-startup-id dbus-launch /usr/bin/pasystray
 
 - name: Check if Git i3-gnome already checkt out
   stat:
@@ -142,56 +150,9 @@
   blockinfile:
     dest: ~/.config/i3/config
     marker: '#-{mark}-XRANDR'
-    insertbefore: '^(.*)# i3 blocks key(.*)$'
+    insertbefore: '^(.*)i3 blocks key(.*)$'
     block: |
       exec --no-startup-id xrandr --output {{ i3_screen_output }} --mode {{ i3_screen_resolution }} --pos 0x0 --primary
-
-- name: copy vim config
-  become: no
-  copy:
-    src: vimrc
-    dest: ~/.vimrc
-
-- name: copy tmux config
-  become: no
-  copy:
-    src: tmux.conf
-    dest: ~/.tmux.conf
-
-- name: create tmux config folder
-  become: no
-  file:
-    path: ~/.config/tmux
-    state: directory
-
-- name: copy tmux theme
-  become: no
-  copy:
-    src: tmux-power.tmux
-    dest: ~/.config/tmux/tmux-power.tmux
-    mode: '0755'
-
-- name: create folders for mc
-  become: no
-  file:
-    path: "{{ item }}"
-    state: directory
-    mode: '0755'
-  with_items:
-    - "~/.local/share/mc/skins"
-    - "~/.config/mc"
-
-- name: copy mc skin file 
-  become: no
-  copy:
-    src: mc-skin
-    dest: ~/.local/share/mc/skins/cp-blue-00.ini
-
-- name: copy mc config file
-  become: no
-  copy:
-    src: mc-ini
-    dest: ~/.config/mc/ini
 
 - block:
   - name: remove apport & whoopsie
@@ -200,11 +161,13 @@
       state: absent
   when: uninstall_apport | bool
 
-# remove until everything is fixed
-# - include: polybar.yml
+# install polybar
+- include: polybar.yml
+  when: install_polybar | bool
 
 # install i3blocks instead
 - include: i3blocks.yml
+  when: not install_polybar | bool
 
 # install i3 gaps
 - include: i3gaps.yml

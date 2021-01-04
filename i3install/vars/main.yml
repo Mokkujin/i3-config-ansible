@@ -13,7 +13,7 @@ i3_packages:
   - ncdu
   - lxappearance
   - pasystray
-  - vim-airline
+ 
 
 # REPOS & KEYS
 i3_repo_key: https://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2020.02.03_all.deb
@@ -46,3 +46,4 @@ git_i3_gnome: "https://github.com/Mokkujin/i3-gnome.git"
 git_nerdfonts: "https://github.com/ryanoasis/nerd-fonts.git"
 git_wallpaper: "https://gist.github.com/3d324088ead358c2ea5350e1a93b4ddb.git"
 git_powerline_fonts: "https://github.com/Mokkujin/fonts.git"
+git_polybar: "https://github.com/Mokkujin/polybar-themes.git"

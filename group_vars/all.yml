@@ -18,3 +18,7 @@ install_nerdfonts: true
 uninstall_apport: true
 # install microsoft teams 
 install_ms_teams: true
+# install polybar not i3blocks
+install_polybar: false
+# go-lan install or not
+install_go_lang: true

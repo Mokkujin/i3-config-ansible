@@ -32,3 +32,26 @@
     dest: ~/.config/i3/
     mode: 0744
 
+- name: add config to ~/.config/i3/config
+  become: no
+  blockinfile:
+    path: ~/.config/i3/config
+    marker: '# - {mark} - i3block config'
+    insertbefore: '(.*)i3 blocks key indicator(.*)$'
+    block: |
+        bar {
+          position top
+          status_command i3blocks -c ~/.config/i3/i3blocks.conf
+          tray_output primary
+          font pango:System San Francisco Display 10
+            colors {
+              background       $BGN
+              statusline       $TXC
+              separator        $TXC
+              focused_workspace  	$BGN 		$BGN	 	$TXC
+              active_workspace   	$BGN 		$BGN 		$TXC
+              inactive_workspace 	$BGN 		$BGN 		$TXC
+              urgent_workspace 	$BGN         	$BGU            $TXUS 
+              binding_mode       	$BGN	 	$BGN	 	$TXC	
+            }
+        }

@@ -1,17 +1,12 @@
 ---
 # vars file for develope
-
-
 ms_key:  "https://packages.microsoft.com/keys/microsoft.asc"
-
-# go-lan install or not
-install_go_lang: true
 # define the url if you want to use a diffrent avi_api_version
 go_get_url: "https://golang.org/dl/go1.15.6.linux-amd64.tar.gz"
 # set the sha256 checksum here
 go_get_checksum: sha256:3918e6cc85e7eaaa6f859f1bdbaac772e7a825b0eb423c63d3ae68b21f84b844
-
 dev_tools:
   - code
   - microsoft-edge-dev
   - remmina
+  - vim-airline

@@ -54,7 +54,50 @@
         line: 'export PATH=$PATH:/usr/local/go/bin'
 
   when: install_go_lang | bool
-      
 
+- name: copy vim config
+  become: no
+  copy:
+    src: vimrc
+    dest: ~/.vimrc
 
+- name: copy tmux config
+  become: no
+  copy:
+    src: tmux.conf
+    dest: ~/.tmux.conf
 
+- name: create tmux config folder
+  become: no
+  file:
+    path: ~/.config/tmux
+    state: directory
+
+- name: copy tmux theme
+  become: no
+  copy:
+    src: tmux-power.tmux
+    dest: ~/.config/tmux/tmux-power.tmux
+    mode: '0755'
+
+- name: create folders for mc
+  become: no
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  with_items:
+    - "~/.local/share/mc/skins"
+    - "~/.config/mc"
+
+- name: copy mc skin file 
+  become: no
+  copy:
+    src: mc-skin
+    dest: ~/.local/share/mc/skins/cp-blue-00.ini
+
+- name: copy mc config file
+  become: no
+  copy:
+    src: mc-ini
+    dest: ~/.config/mc/ini

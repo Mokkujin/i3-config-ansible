@@ -15,8 +15,18 @@
 
 - name: 'Install polybar'
   package:
-    name: ['polybar']
+    name: ['polybar','pywal','calc','python3-pip']
     state: present
+
+- name: update pip
+  pip:
+    name: pip
+    state: latest
+
+- name: install pywall
+  pip:
+    name: pywal
+    state: latest
 
 - name: Create dir for config
   become: no
@@ -28,10 +38,9 @@
 - name: Git checkout Polybar-Themes
   become: no
   git:
-    repo: https://github.com/adi1090x/polybar-themes.git
+    repo: "{{ git_polybar }}"
     dest: /tmp/polybar-themes
-    depth: "1"
-
+ 
 - name: Copy theme to config
   become: no
   # !!
@@ -63,13 +72,6 @@
     dest: /tmp/nerdfonts
     depth: "1"
   when: not nf_exists.stat.exists
- 
-- name: Install nerdfonts
-  become: no
-  shell:
-    cmd: ./install.sh && echo "Nerdfonts installed" > ~/.config/i3/.nerdfontsinstalled
-    chdir: /tmp/nerdfonts
-    creates: ~/.config/i3/.nerdfontsinstalled
 
 - name: Enable polybar in i3
   become: no
@@ -77,10 +79,3 @@
     dest: ~/.config/i3/config
     regexp: ".#polybarstartup" 
     line: "exec --no-startup-id ~/.config/polybar/launch.sh #polybarstartup DO NOT REMOVE COMMENT"
-
-- name: Enable nm-applet in i3
-  become: no
-  lineinfile:
-    dest: ~/.config/i3/config
-    regexp: ".#nmappletstartup" 
-    line: "exec --no-startup-id nm-applet #nmappletstartup DO NOT REMOVE COMMENT"
