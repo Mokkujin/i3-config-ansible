@@ -32,4 +32,3 @@
     dest: ~/.config/i3/
     mode: 0744
 
-- include: i3gaps.yml

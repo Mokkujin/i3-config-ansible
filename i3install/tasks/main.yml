@@ -206,8 +206,11 @@
 # install i3blocks instead
 - include: i3blocks.yml
 
+# install i3 gaps
+- include: i3gaps.yml
+
 # instal and configure rofi theme and remove dmenu
-- include : rofi.yml
+- include: rofi.yml
 
 # themes & icons
 - include: set-gtktheme.yml
