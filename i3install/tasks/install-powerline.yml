@@ -1,0 +1,28 @@
+---
+- block:
+  - name: install powerline
+    apt:
+      name: powerline
+      state: present
+
+  - name: powerline fonts
+    git:
+      repo: "{{ git_powerline_fonts }}"
+      dest: /tmp/powerline-fonts
+
+  - name: install powerline fonts
+    shell:
+      cmd: /tmp/powerline-fonts/install.sh && touch /home/.powerlinefonts
+      creates: /home/.powerlinefonts
+
+  - name: add powerline to .bashrc
+    become: no
+    blockinfile:
+      dest: ~/.bashrc
+      marker: '#-{mark}-POWERLINE'
+      block: |
+        if [ -f /usr/share/powerline/bindings/bash/powerline.sh ]; then 
+          source /usr/share/powerline/bindings/bash/powerline.sh 
+        fi
+  
+  when: install_powerline | bool

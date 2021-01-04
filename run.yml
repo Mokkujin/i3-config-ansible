@@ -1,0 +1,9 @@
+
+---
+- name: run common tasks
+  hosts: ubuntu_clients
+  become: yes
+  roles:
+   - common
+   - i3install
+   - develope

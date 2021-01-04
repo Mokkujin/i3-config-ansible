@@ -1,0 +1,20 @@
+---
+
+# install and configure flatpak
+install_flatpak : true
+# Configure Your Primary Screen HERE ! otherwise the systray will not work !
+i3_screen_output: eDP-1-1
+i3_screen_resolution: 1920x1080
+# install powerline if you want set to false if not
+install_powerline: true
+# install i3 gaps
+install_i3_gaps: true
+# install wallpapers
+install_wallpaper: true
+# install nerdfonts (default is true ! if not installed the i3blocks show no icons ! if you rerun the playbook you could set to false) 
+install_nerdfonts: true
+# uninstall apport & whoopsie ?
+# Error Reporting to Ubuntu
+uninstall_apport: true
+# install microsoft teams 
+install_ms_teams: true

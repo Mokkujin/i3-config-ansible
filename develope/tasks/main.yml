@@ -1,0 +1,60 @@
+---
+# tasks file for develope
+
+- name: install microsoft repos
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+  register: ms_repo_installed
+  with_items:
+   - deb [arch=amd64] https://packages.microsoft.com/repos/code stable main
+   - deb [arch=amd64] https://packages.microsoft.com/repos/edge stable main
+   - deb [arch=amd64] https://packages.microsoft.com/repos/ms-teams stable main
+   
+- name: add microsoft key
+  apt_key:
+    url: "{{ ms_key }}"
+    state: present
+
+- name: Run apt update
+  apt:
+    update_cache: yes
+  when: ms_repo_installed.changed
+  
+- name: install dev things 
+  apt:
+    name: "{{ dev_tools }}"
+    state: latest
+    install_recommends: yes
+
+- name: install Microsoft Teams
+  apt:
+    name: teams
+    state: present
+  when: install_ms_teams | bool
+  
+- block:
+
+  - name: download go 1.15.6
+    get_url:
+      url: "{{ go_get_url }}"
+      dest: /tmp/go.tgz
+      checksum: "{{ go_get_checksum }}"
+
+  - name: install go 
+    unarchive:
+        src: /tmp/go.tgz
+        dest: /usr/local
+        remote_src: yes
+     
+  - name: add go to path (you have to run -> source ~/.bashrc)
+    become: no
+    lineinfile:
+        path: ~/.bashrc
+        line: 'export PATH=$PATH:/usr/local/go/bin'
+
+  when: install_go_lang | bool
+      
+
+
+

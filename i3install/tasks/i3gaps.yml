@@ -1,0 +1,41 @@
+---
+- block:
+
+  - name: create config entry for i3gaps in i3/config
+    become: no
+    blockinfile:
+      dest: ~/.config/i3/config
+      marker: '# - {mark} - i3_gaps'
+      insertbefore: '^(.*)floating for dialogs(.*)$'
+      block: |
+        for_window [class="^.*"] border pixel 1
+        smart_gaps on
+        smart_borders on
+        gaps inner 5
+        gaps outer 2
+        bindsym $mod+minus gaps inner current minus 5
+        bindsym $mod+plus gaps inner current plus 5
+ 
+  - name: install packages for compile i3-gaps
+    apt:
+      name: "{{ i3_gaps_build_packages }}"
+      state: present
+
+  - name: check folder
+    stat:
+      path: /tmp/i3-gaps
+    register: i3f
+
+  - name: clone i3-gaps
+    shell:
+      cmd: cd /tmp && git clone https://www.github.com/Airblader/i3 i3-gaps && touch /tmp/.i3gaps
+      creates: /tmp/.i3gaps
+    when: not i3f.stat.exists
+
+  - name: compile i3-gaps
+    shell:
+      cmd: cd /tmp/i3-gaps && mkdir -p build && cd build && meson .. && ninja && meson install && touch /tmp/.i3ginst
+      creates: /tmp/.i3ginst
+    when: not i3f.stat.exists
+
+  when: install_i3_gaps | bool

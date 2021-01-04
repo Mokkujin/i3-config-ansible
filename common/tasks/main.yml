@@ -1,0 +1,6 @@
+---
+# tasks file for common
+- name: include vars
+  include_vars: main.yml
+  
+- include: install_packages.yml 

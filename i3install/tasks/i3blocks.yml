@@ -1,0 +1,35 @@
+---
+
+- name: install i3blocks
+  apt:
+    name: ['i3blocks','i3status']
+    state: present
+
+- name: create folder for i3blocks scripts
+  become: no
+  file:
+    path: ~/.config/i3/scripts/logs
+    state: directory
+    mode: '0755'
+
+- name: copy files to i3blocks script folder
+  become: no
+  copy:
+    src: "{{ item }}"
+    dest: ~/.config/i3/scripts
+    mode: 0764
+  with_items:
+    - get_updates.sh
+    - i3exit.sh
+    - mem.sh
+    - net.sh
+    - world_time.sh
+  
+- name: copy i3block config
+  become: no
+  copy:
+    src: i3blocks.conf
+    dest: ~/.config/i3/
+    mode: 0744
+
+- include: i3gaps.yml

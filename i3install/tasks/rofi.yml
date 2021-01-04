@@ -1,0 +1,54 @@
+
+---
+- name: copy rofi config file
+  copy:
+    src: grey-cp.rasi
+    dest: /usr/share/rofi/themes/
+
+- name: create rofi entry in i3 config
+  become: no
+  lineinfile:
+    dest: ~/.config/i3/config
+    regexp: ".#userofinotdmenu" 
+    line: "bindsym $mod+d exec --no-startup-id \"rofi -modi drun,combi,ssh -combi-modi drun,run,ssh -show combi -show run -lines 4 -eh 1 -width 30 -padding 20 -opacity '75' -bw 0 -bc '#3f3f3f' -bg '#282a33' -fg '#787878' -hlbg '#282a33' -hlfg '#9575cd'\""
+
+- name: remove dmenu from i3 config
+  become: no
+  lineinfile:
+    dest: ~/.config/i3/config
+    regexp: '^(.*)exec dmenu_run(.*)$'
+    line: '# NO ONE WANTS THE DEMU - bindsym $mod+d exec dmenu_run'
+    backrefs: yes
+
+- name: create rofi-config folder
+  become: no
+  file:
+    path: ~/.config/rofi
+    state: directory
+    mode: '0775' 
+
+- name: check for rofi config
+  become: no
+  stat:
+    path: ~/.config/rofi/config
+  register: r_c_exists
+
+- name: create config entrys in rofi config (1/2)
+  become: no
+  file:
+    path: ~/.config/rofi/config
+    state: touch
+    mode: '0664'
+  when: not r_c_exists.stat.exists
+
+- name: create config entrys in rofi config (2/2)
+  become: no
+  lineinfile:
+    dest: ~/.config/rofi/config
+    regexp: '^(.*)rofi.theme(.*)$'
+    line: 'rofi.theme: /usr/share/rofi/themes/grey-cp.rasi'
+
+
+
+
+

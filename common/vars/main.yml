@@ -1,0 +1,42 @@
+---
+# vars file for common
+
+ubuntu_system_tools:
+  - htop
+  - bmon
+  - iftop
+  - ccze
+  - flameshot
+  - git
+  - tilix
+  - vim
+  - pavucontrol
+  - tree
+  - nmap # because its not a linux without nmap ;)
+  - gnome-tweak-tool
+  - whois
+  - compton
+  - gtk2-engines-murrine
+  - gtk2-engines-pixbuf
+  - sassc
+  - geary
+  - tmux
+  - mc
+  - apt-transport-https
+  - gpg
+  - tar
+  - p7zip-full
+  - p7zip-rar
+  - simplescreenrecorder
+  - obs-studio
+  - peek
+
+ubuntu_graphic_tools:
+  - gimp
+  - gegl
+  - imagemagick
+  - gimp-help-common
+  - gimp-help-de
+  - gimp-plugin-registry
+  - gimp-lensfun
+  - gimp-gmic

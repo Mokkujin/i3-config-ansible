@@ -1,0 +1,216 @@
+---
+# tasks file for i3install
+
+- name: iunclude vars
+  include_vars: main.yml
+
+- name: install and activate i3 repo
+  apt: 
+    deb: "{{ i3_repo_key }}"
+    state: present
+  
+- apt_repository:
+    repo: "{{ i3_repo }}"
+    state: present
+    filename: i3repo
+  register: i3repo
+
+- name: Run apt update
+  apt:
+    update_cache: yes
+    autoclean: yes
+  when: i3repo.changed
+
+- name: install i3 and all req. packages
+  apt: 
+    name: "{{ i3_packages }}"
+    state: present
+
+- name: create config folder for i3
+  become: no
+  file:
+    path: ~/.config/i3/scripts
+    state: directory
+    mode: '0755'
+
+- name: check config and skip if exists
+  become: no
+  stat:
+    path: ~/.config/i3/config
+  register: i3cf
+
+- name: copy config
+  become: no
+  copy:
+    src: config
+    dest: ~/.config/i3/config
+    mode: 0755
+  when: not i3cf.stat.exists
+
+# Extend I3 Config
+
+- name: Enable nm-applet in i3
+  become: no
+  lineinfile:
+    dest: ~/.config/i3/config
+    line: "exec --no-startup-id dbus-launch nm-applet #nmapplet startup !! DO NOT REMOVE COMMENT !!"
+
+- name: Enable pasystray in i3
+  become: no
+  lineinfile:
+    dest: ~/.config/i3/config
+    line: "exec --no-startup-id dbus-launch /usr/bin/pasystray #pasystray startup !! DO NOT REMOVE COMMENT !!"
+
+- name: Check if Git i3-gnome already checkt out
+  stat:
+    path: /tmp/i3gnome/README.md
+  register: i3g
+
+- name: Git checkout i3-gnome
+  git:
+    repo: "{{ git_i3_gnome }}"
+    dest: /tmp/i3gnome
+  when: not i3g.stat.exists
+  register: insi3g
+
+- name: Install i3-gnome
+  shell:
+    cmd: make install
+    chdir: /tmp/i3gnome
+  when: insi3g.changed
+
+- name: Disable gnome Desktop
+  become: no
+  shell:
+    cmd: gsettings set org.gnome.gnome-flashback desktop false
+
+- name: Enable Wallpapers
+  become: no
+  shell:
+    cmd: gsettings set org.gnome.gnome-flashback root-background true
+
+- block:
+  - name: check nerdfonts
+    stat:
+      path: /tmp/nerdfonts
+    register: nf_exists
+
+  - name: Git checkout nerdfonts
+    git:
+      repo: "{{ git_nerdfonts }}"
+      dest: /tmp/nerdfonts
+      depth: "1"
+    when: not nf_exists.stat.exists
+ 
+  - name: Install nerdfonts
+    become: no
+    shell:
+      cmd: ./install.sh && echo "Nerdfonts installed" > ~/.config/i3/.nerdfontsinstalled
+      chdir: /tmp/nerdfonts
+      creates: ~/.config/i3/.nerdfontsinstalled
+
+  when: install_nerdfonts | bool
+
+- name: Enable composite compton
+  become: no
+  blockinfile:
+    dest: ~/.config/i3/config
+    marker: '#-{mark}-A'
+    insertbefore: '^(.*)# NetworkManager(.*)$'
+    block: |
+      # Run Compoton on Startup
+      exec_always --no-startup-id compton
+
+- block:    
+  - name: Get Some Fancy Wallpapers
+    become: no
+    git:
+      repo: "{{ git_wallpaper }}"
+      dest: ~/Bilder/Wallpapers-GH
+  when: install_wallpaper | bool
+
+- name: Set Monitor in Config from Vars
+  become: no
+  replace: 
+
+    path: ~/.config/i3/config
+    regexp: '(\s+)tray_output primary(\s+.*)?$'
+    replace: "\n    tray_output {{ i3_screen_output }}\n"
+
+- name: add xrandr to configfile
+  become: no
+  blockinfile:
+    dest: ~/.config/i3/config
+    marker: '#-{mark}-XRANDR'
+    insertbefore: '^(.*)# i3 blocks key(.*)$'
+    block: |
+      exec --no-startup-id xrandr --output {{ i3_screen_output }} --mode {{ i3_screen_resolution }} --pos 0x0 --primary
+
+- name: copy vim config
+  become: no
+  copy:
+    src: vimrc
+    dest: ~/.vimrc
+
+- name: copy tmux config
+  become: no
+  copy:
+    src: tmux.conf
+    dest: ~/.tmux.conf
+
+- name: create tmux config folder
+  become: no
+  file:
+    path: ~/.config/tmux
+    state: directory
+
+- name: copy tmux theme
+  become: no
+  copy:
+    src: tmux-power.tmux
+    dest: ~/.config/tmux/tmux-power.tmux
+    mode: '0755'
+
+- name: create folders for mc
+  become: no
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  with_items:
+    - "~/.local/share/mc/skins"
+    - "~/.config/mc"
+
+- name: copy mc skin file 
+  become: no
+  copy:
+    src: mc-skin
+    dest: ~/.local/share/mc/skins/cp-blue-00.ini
+
+- name: copy mc config file
+  become: no
+  copy:
+    src: mc-ini
+    dest: ~/.config/mc/ini
+
+- block:
+  - name: remove apport & whoopsie
+    apt:
+      name: ['apport','apport-gtk','whoopsie']
+      state: absent
+  when: uninstall_apport | bool
+
+# remove until everything is fixed
+# - include: polybar.yml
+
+# install i3blocks instead
+- include: i3blocks.yml
+
+# instal and configure rofi theme and remove dmenu
+- include : rofi.yml
+
+# themes & icons
+- include: set-gtktheme.yml
+
+# install powerline
+- include: install-powerline.yml

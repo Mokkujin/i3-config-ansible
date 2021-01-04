@@ -1,0 +1,39 @@
+
+---
+- name: Run apt update
+  apt:
+    update_cache: yes
+    cache_valid_time: 36000
+
+- name: Update all packages to the latest version
+  apt:
+    upgrade: dist
+    
+- name: install system tools
+  apt:
+    name: "{{ ubuntu_system_tools }}"
+    state: present
+    install_recommends: yes
+
+- name: install gimp & graphic libs
+  apt:
+    name: "{{ ubuntu_graphic_tools }}"
+    state: present
+    install_recommends: yes
+
+- block:
+
+  - name: install & activate flatpak
+    apt:
+      name: ['flatpak','gnome-software-plugin-flatpak']
+      state: present
+  - name: aktivate flatpak repo
+  # on older versions of ansible you have to use the shell command
+  #  shell: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    flatpak_remote:
+        name: flathub
+        state: present
+        flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+
+  when: install_flatpak | bool
+

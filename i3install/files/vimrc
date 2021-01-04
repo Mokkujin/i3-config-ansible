@@ -1,0 +1,34 @@
+set encoding=utf-8
+syntax on
+colorscheme darkblue
+hi Normal guibg=NONE ctermbg=NONE
+hi Statusline ctermbg=NONE ctermfg=3
+set tabstop=4
+set softtabstop=4
+set expandtab ts=4 sw=4 ai
+set ignorecase
+set statusline=%f         " Path to the file
+set statusline+=\ -\      " Separator
+set statusline+=FileType: " Label
+set statusline+=%y        " Filetype of the file
+set statusline+=\ Line:%l-%L " LineNumber
+set statusline+=\ -\      " Separator
+set statusline+=Hostname:
+set statusline+=%{hostname()}
+set statusline+=%=
+set statusline+=TIME:\ %{strftime('%c')}
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme='cool'
+let g:airline_powerline_fonts = 1
+set rtp+=/usr/share/vim/addons/plugin/
+python3 from powerline.vim import setup as powerline_setup
+python3 powerline_setup()
+python3 del powerline_setup
+"""""""""""" Start Powerline Settings """"""""""""""""
+"set guifont=Inconsolata\ for\ Powerline\ 15
+"let g:Powerline_symbols = 'fancy'
+set t_Co=256
+"set fillchars+=stl:\ ,stlnc:\
+set term=xterm-256color
+set termencoding=utf-8
+set laststatus=2

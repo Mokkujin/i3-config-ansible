@@ -1,0 +1,154 @@
+#
+# To use this skik edit ~/.config/mc/ini and in the [Midnight-Commander]
+# section set skin=cp-blue-00
+
+[skin]
+    description=cp-blue-00
+
+[Lines]
+    horiz=─
+    vert=│
+    lefttop=┌
+    righttop=┐
+    leftbottom=└
+    rightbottom=┘
+    topmiddle=─
+    bottommiddle=─
+    leftmiddle=├
+    rightmiddle=┤
+    cross=┼
+    dhoriz=═
+    dvert=║
+    dlefttop=╔
+    drighttop=╗
+    dleftbottom=╚
+    drightbottom=╝
+    dtopmiddle=╤
+    dbottommiddle=╧
+    dleftmiddle=╟
+    drightmiddle=╢
+
+[core]
+    _default_=blue;black
+    selected=black;blue
+    marked=yellow;black
+    markselect=yellow;brown
+    gauge=white;blue
+    input=yellow;brown
+    inputunchanged=gray;blue
+    inputmark=cyan;black
+    disabled=gray;black
+    reverse=black;blue
+    commandlinemark=black;blue
+    header=cyan;black
+    inputhistory=
+    commandhistory=
+
+[dialog]
+    _default_=default;default
+    dfocus=black;blue
+    dhotnormal=green;default
+    dhotfocus=yellow;brown
+    dtitle=white;
+
+[error]
+    _default_=white;red
+    errdfocus=black;blue
+    errdhotnormal=yellow;red
+    errdhotfocus=yellow;blue
+    errdtitle=yellow;red
+
+[filehighlight]
+    directory=white
+    executable=brightmagenta;
+    symlink=blue;
+    hardlink=blue;
+    stalelink=brightred;
+    device=yellow;
+    special=brightblue;
+    core=red;
+    temp=gray;
+    archive=brightgreen;
+    doc=brown;
+    source=cyan;
+    media=green;
+    graph=brightcyan;
+    database=brightred;
+
+[menu]
+    _default_=blue;black
+    menuhot=red;black
+    menusel=white;black
+    menuhotsel=red;black
+    menuinactive=default;default
+
+[help]
+    _default_=black;blue
+    helpitalic=red;blue
+    helpbold=blue;blue
+    helplink=yellow;blue
+    helpslink=yellow;brown
+    helptitle=black;blue
+
+[editor]
+    _default_=blue;black
+    editbold=yellow;brightgreen
+    editmarked=black;white
+    editwhitespace=brightblue;black
+    editlinestate=white;lightbluegray
+    bookmark=white;red
+    bookmarkfound=black;green
+    editrightmargin=white;blue
+#    editbg=
+    editframe=gray;
+    editframeactive=blue;
+    editframedrag=white;
+    window-state-char = ↕
+    window-close-char = ×
+
+[viewer]
+    viewbold=yellow;black
+    viewunderline=brightred;black
+    viewselected=yellow;blue
+
+[diffviewer]
+    added=white;green
+    changedline=blue;cyan
+    changednew=red;cyan
+    changed=white;cyan
+    removed=white;red
+    folder=blue;black
+    error=red;white
+
+[buttonbar]
+    hotkey=blue;black
+    button=gray;black
+
+[statusbar]
+    _default_=black;white
+
+[popupmenu]
+    _default_=blue;black
+    menusel=black;blue
+    menutitle=white;black
+
+[widget-common]
+    sort-sign-up=↑
+    sort-sign-down=↓
+
+[widget-panel]
+    hiddenfiles-sign-show  = •
+    hiddenfiles-sign-hide  = ○
+    history-prev-item-sign = ←
+    history-next-item-sign = →
+    history-show-list-sign = ↓
+    filename-scroll-left-char = «
+    filename-scroll-right-char = »
+
+[widget-scollbar]
+    first-vert-char=↑
+    last-vert-char=↓
+    first-horiz-char=«
+    last-horiz-char=»
+    current-char=■
+    background-char=▒

@@ -1,0 +1,96 @@
+---
+
+- name: get gtk theme 
+  git:
+    repo: https://github.com/vinceliuice/Qogir-theme
+    dest: /tmp/qogir
+    force: yes
+
+- name: set gesettings for windows
+  become: no
+  shell:
+    cmd: gsettings set org.gnome.desktop.wm.preferences button-layout appmenu:minimize,maximize,close && touch ~/.config/i3/.gesettingsbuttons
+    creates: ~/.config/i3/.gesettingsbuttons
+
+- name: install qogir themes
+  shell: 
+    cmd: /tmp/qogir/install.sh -g -c dark -l ubuntu -t standard -i -d /usr/share/themes && touch /home/.qogirinstalled
+    creates: /home/.qogirinstalled
+
+- name: git -> get qogir icons
+  git:
+    repo: https://github.com/vinceliuice/Qogir-icon-theme
+    dest: /tmp/qogir-icons
+    force: yes
+
+- name: install qogir icons
+  shell: 
+    cmd: /tmp/qogir-icons/install.sh && touch /home/.qogiriconsinstalled
+    creates: /home/.qogiriconsinstalled
+
+- name: set gsettings themes to Qogir-dark
+  become: no
+  shell:
+    cmd: gsettings set org.gnome.desktop.interface gtk-theme "Qogir-dark" && touch ~/.gsqdt
+    creates: ~/.gsqdt
+
+- name: set gesettings screenlock 
+  become: no
+  shell:
+    cmd: gsettings set org.gnome.desktop.screensaver picture-uri file:////usr/share/backgrounds/back_qo_cp.jpg && touch ~/.gsqst
+    creates: ~/.gsqst
+
+- name: set gsettings icons to Qogir-dark
+  become: no
+  shell:
+    cmd: gsettings set org.gnome.desktop.interface icon-theme 'Qogir-dark' && touch ~/.gsqdi
+    creates: ~/.gsqdi
+
+- name: copy wallpaper
+  copy:
+    src: back.jpg
+    dest: /usr/share/backgrounds/back_qo_cp.jpg
+
+- name: set gsetting wallpaper
+  become: no
+  shell:
+    cmd: gsettings set org.gnome.desktop.background picture-uri file:////usr/share/backgrounds/back_qo_cp.jpg && touch ~/.config/i3/.gse_wall
+    creates: ~/.config/i3/.gse_wall
+
+- name: set tilix as default terminal
+  shell:
+    cmd: update-alternatives --set x-terminal-emulator /usr/bin/tilix.wrapper && touch /home/.settilix
+    creates: /home/.settilix
+
+- name: fix damm vte for tilix
+  file:
+    src: /etc/profile.d/vte-2.91.sh
+    dest: /etc/profile.d/vte.sh
+    state: link
+
+- name: create vte entry in .bashrc
+  become: no
+  blockinfile:
+    dest: ~/.bashrc
+    marker: '#-{mark}-VTE FIX'
+    block: |
+      if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+        source /etc/profile.d/vte.sh
+      fi
+
+# Run only on Ubuntu 20.04
+
+- block:
+
+  - name: install focalgdm3 to /usr/bin
+    copy:
+      src: focalgdm3
+      dest: /usr/bin/focalgdm3
+      mode: 0755
+
+  - name: set gdm3 theme with focalgdm3
+    shell:
+      cmd: /usr/bin/focalgdm3 /usr/share/backgrounds/back_qo_cp.jpg && touch /home/.fgdm3set
+      creates: /home/.fgdm3set
+      
+  when: ansible_distribution_release == 'focal' and ansible_distribution_version == '20.04'

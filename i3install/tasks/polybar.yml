@@ -1,0 +1,86 @@
+
+---
+
+- name: add repo if ubuntu 20.04
+  apt_repository:
+    repo: ppa:kgilmer/speed-ricer
+  register: addppa
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04'
+
+- name: Run apt update
+  apt:
+    update_cache: yes
+    autoclean: yes
+  when: addppa.changed
+
+- name: 'Install polybar'
+  package:
+    name: ['polybar']
+    state: present
+
+- name: Create dir for config
+  become: no
+  file:
+    path: ~/.config/polybar
+    state: directory
+    mode: '0755'
+
+- name: Git checkout Polybar-Themes
+  become: no
+  git:
+    repo: https://github.com/adi1090x/polybar-themes.git
+    dest: /tmp/polybar-themes
+    depth: "1"
+
+- name: Copy theme to config
+  become: no
+  # !!
+  shell:
+    cmd: cp -r /tmp/polybar-themes/* ~/.config/polybar/ && echo "Polybar installed" > ~/.config/i3/.polybarconfiginstalled
+    creates: ~/.config/i3/.polybarconfiginstalled
+
+- name: Copy polybar custom config
+  become: no
+  copy:
+    src: polybar.ini
+    dest: ~/.config/polybar/config.ini
+
+- name: Copy polybar custom launcher
+  become: no
+  copy:
+    src: launch.sh
+    dest: ~/.config/polybar/launch.sh
+    mode: '0764'
+
+- name: check nerdfonts
+  stat:
+    path: /tmp/nerdfonts/install.sh
+  register: nf_exists
+
+- name: Git checkout nerdfonts
+  git:
+    repo: 'https://github.com/ryanoasis/nerd-fonts.git'
+    dest: /tmp/nerdfonts
+    depth: "1"
+  when: not nf_exists.stat.exists
+ 
+- name: Install nerdfonts
+  become: no
+  shell:
+    cmd: ./install.sh && echo "Nerdfonts installed" > ~/.config/i3/.nerdfontsinstalled
+    chdir: /tmp/nerdfonts
+    creates: ~/.config/i3/.nerdfontsinstalled
+
+- name: Enable polybar in i3
+  become: no
+  lineinfile:
+    dest: ~/.config/i3/config
+    regexp: ".#polybarstartup" 
+    line: "exec --no-startup-id ~/.config/polybar/launch.sh #polybarstartup DO NOT REMOVE COMMENT"
+
+- name: Enable nm-applet in i3
+  become: no
+  lineinfile:
+    dest: ~/.config/i3/config
+    regexp: ".#nmappletstartup" 
+    line: "exec --no-startup-id nm-applet #nmappletstartup DO NOT REMOVE COMMENT"

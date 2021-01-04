@@ -1,0 +1,48 @@
+---
+# vars file for i3install
+
+i3_packages:
+  - i3
+  - i3lock
+  - i3status
+  - rofi
+  - build-essential
+  - gnome-flashback
+  - gnome-screensaver
+  - feh
+  - ncdu
+  - lxappearance
+  - pasystray
+  - vim-airline
+
+# REPOS & KEYS
+i3_repo_key: https://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2020.02.03_all.deb
+i3_repo: "deb [arch=amd64] http://debian.sur5r.net/i3/ focal universe"
+
+i3_gaps_build_packages:
+  - libxcb1-dev
+  - libxcb-keysyms1-dev
+  - libpango1.0-dev
+  - libxcb-util0-dev
+  - libxcb-icccm4-dev
+  - libyajl-dev
+  - libstartup-notification0-dev
+  - libxcb-randr0-dev
+  - libev-dev
+  - libxcb-cursor-dev
+  - libxcb-xinerama0-dev
+  - libxcb-xkb-dev
+  - libxkbcommon-dev
+  - libxkbcommon-x11-dev
+  - autoconf
+  - libxcb-xrm0
+  - libxcb-xrm-dev
+  - automake
+  - libxcb-shape0-dev
+  - meson
+
+# GIT REPOS 
+git_i3_gnome: "https://github.com/Mokkujin/i3-gnome.git"
+git_nerdfonts: "https://github.com/ryanoasis/nerd-fonts.git"
+git_wallpaper: "https://gist.github.com/3d324088ead358c2ea5350e1a93b4ddb.git"
+git_powerline_fonts: "https://github.com/Mokkujin/fonts.git"

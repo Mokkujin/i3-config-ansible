@@ -1,0 +1,145 @@
+/**
+ * Author: Primetoxinz
+ */
+configuration {
+	display-drun:   "-- ";
+    display-run:    "-> ";
+    display-window: ">> ";
+    show-icons:     false;
+
+}
+* {
+    text-color:                  rgb(95,95,95,0.95);
+    background-color:            rgb(25,26,31,0.95);
+    none:                        rgb(0,0,0,0);
+    lightbg:                     #282a33;
+    red:                         #f15d22;
+    orange:                      #faa41a; 
+    blue:                        #48b9c7;
+    TXH:                         #929292; 
+    TXN:                         #414450;
+
+    selected-normal-foreground:  @TXH;
+    normal-foreground:           @TXN;
+    alternate-normal-background: @none;
+    selected-urgent-foreground:  @TXH;
+    urgent-foreground:           @TXN;
+    alternate-urgent-background: @none;
+    active-foreground:           @TXN;
+    selected-active-foreground:  @TXH;
+    alternate-normal-foreground: @TXN;
+    alternate-active-background: @none;
+    bordercolor:                 @none;
+    normal-background:           @none;
+    selected-normal-background:  @none;
+    separatorcolor:              @orange;
+    spacing:                     3;
+    urgent-background:           @none;
+    alternate-urgent-foreground: @TXN;
+    selected-urgent-background:  @none;
+    alternate-active-foreground: @TXN;
+    selected-active-background:  @none;
+    active-background:           @none;
+}
+#window {
+    border:     1;
+    border-radius:  5;
+    padding:    10;
+    text-color: @TXN;
+    background-color: @background-color;
+}
+#mainbox {
+    border:  0;
+    padding: 0;
+    background-color: @none;
+}
+#message {
+    border:     1px dash 0px 0px ;
+    text-color: @separatorcolor;
+    padding:    4px 0px 0px ;
+    background-color: @none;
+
+}
+#textbox {
+    text-color: @TXN;
+}
+#listview {
+    fixed-height: 0;
+    border:       3px 0px 0px ;
+    padding:      4px 0px 10px ;
+    text-color: @separatorcolor;
+    background-color: @none;
+    spacing: 0.5em;
+}
+#element {
+    border: 0;
+}
+#element.normal.normal {
+    text-color: @normal-foreground;
+    background-color: @none;
+}
+#element.normal.urgent {
+    text-color: @urgent-foreground;
+    background-color: @none;
+}
+#element.normal.active {
+    text-color: @active-foreground;
+    background-color: @none;
+}
+#element.selected.normal {
+    text-color: @selected-normal-foreground;
+    background-color: @none;
+}
+#element.selected.urgent {
+    text-color: @selected-urgent-foreground;
+    background-color: @none;
+}
+#element.selected.active {
+    text-color: @selected-active-foreground;
+    background-color: @none;
+}
+#element.alternate.normal {
+    text-color: @alternate-normal-foreground;
+    background-color: @none;
+}
+#element.alternate.urgent {
+    text-color: @alternate-urgent-foreground;
+    background-color: @none;
+}
+#element.alternate.active {
+    text-color: @alternate-active-foreground;
+    background-color: @none;
+}
+#sidebar {
+    border: 1px dash 0px 0px ;
+}
+#button selected {
+    text-color: @selected-normal-foreground;
+    background-color: @none;
+}
+#inputbar {
+    text-color: @TXN;
+    spacing: 20;
+    border: 0px ;
+    padding:0px 5px 8px 0px;
+    background-color: @none;
+}
+
+#prompt {
+   enabled: false;
+   background-color: @none;
+}
+
+#entry {
+   background-color: @none;
+}
+
+#ci {
+   background-color: @none;
+}
+
+#button normal {
+    text-color: @foreground;
+}
+
+/* vim:ft=css
