@@ -15,8 +15,9 @@
 
 - name: 'Install polybar'
   package:
-    name: ['polybar','pywal','calc','python3-pip']
+    name: ['polybar','calc','python3-pip']
     state: present
+    install_recommends: yes
 
 - name: update pip
   pip:
@@ -36,46 +37,19 @@
     mode: '0755'
 
 - name: Git checkout Polybar-Themes
-  become: no
   git:
     repo: "{{ git_polybar }}"
     dest: /tmp/polybar-themes
  
 - name: Copy theme to config
   become: no
-  # !!
   shell:
-    cmd: cp -r /tmp/polybar-themes/* ~/.config/polybar/ && echo "Polybar installed" > ~/.config/i3/.polybarconfiginstalled
+    cmd: /tmp/polybar-themes/setup.sh sim && touch ~/.config/i3/.polybarconfiginstalled
     creates: ~/.config/i3/.polybarconfiginstalled
-
-- name: Copy polybar custom config
-  become: no
-  copy:
-    src: polybar.ini
-    dest: ~/.config/polybar/config.ini
-
-- name: Copy polybar custom launcher
-  become: no
-  copy:
-    src: launch.sh
-    dest: ~/.config/polybar/launch.sh
-    mode: '0764'
-
-- name: check nerdfonts
-  stat:
-    path: /tmp/nerdfonts/install.sh
-  register: nf_exists
-
-- name: Git checkout nerdfonts
-  git:
-    repo: 'https://github.com/ryanoasis/nerd-fonts.git'
-    dest: /tmp/nerdfonts
-    depth: "1"
-  when: not nf_exists.stat.exists
 
 - name: Enable polybar in i3
   become: no
   lineinfile:
     dest: ~/.config/i3/config
     regexp: ".#polybarstartup" 
-    line: "exec --no-startup-id ~/.config/polybar/launch.sh #polybarstartup DO NOT REMOVE COMMENT"
+    line: "exec --no-startup-id ~/.config/polybar/launch.sh --hack #polybarstartup DO NOT REMOVE COMMENT"

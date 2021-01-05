@@ -30,6 +30,7 @@ ubuntu_system_tools:
   - simplescreenrecorder
   - obs-studio
   - peek
+  - lm-sensors
 
 ubuntu_graphic_tools:
   - gimp
@@ -40,3 +41,6 @@ ubuntu_graphic_tools:
   - gimp-plugin-registry
   - gimp-lensfun
   - gimp-gmic
+
+repo_goggle_chrome: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
+repo_google_key: "https://dl.google.com/linux/linux_signing_key.pub"

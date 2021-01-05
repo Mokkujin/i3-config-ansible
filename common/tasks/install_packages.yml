@@ -22,7 +22,6 @@
     install_recommends: yes
 
 - block:
-
   - name: install & activate flatpak
     apt:
       name: ['flatpak','gnome-software-plugin-flatpak']
@@ -34,6 +33,25 @@
         name: flathub
         state: present
         flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
-
   when: install_flatpak | bool
 
+- block:
+  - name: add google key
+    apt_key:
+      url: "{{ repo_google_key }}"
+      state: present
+
+  - name: add google-chrome repo
+    apt_repository:
+        repo: "{{ repo_goggle_chrome }}"
+        state: present 
+        update_cache: yes
+  - name: install google-chrome
+    apt:
+      name: ['google-chrome-stable']
+      state: present
+  when: install_google_chrome | bool
+
+
+        
+# repo_google_key        wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -

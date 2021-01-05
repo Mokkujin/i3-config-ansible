@@ -1,5 +1,10 @@
 ---
 # tasks file for develope
+   
+- name: add microsoft key
+  apt_key:
+    url: "{{ ms_key }}"
+    state: present
 
 - name: install microsoft repos
   apt_repository:
@@ -7,14 +12,9 @@
     state: present
   register: ms_repo_installed
   with_items:
-   - deb [arch=amd64] https://packages.microsoft.com/repos/code stable main
-   - deb [arch=amd64] https://packages.microsoft.com/repos/edge stable main
-   - deb [arch=amd64] https://packages.microsoft.com/repos/ms-teams stable main
-   
-- name: add microsoft key
-  apt_key:
-    url: "{{ ms_key }}"
-    state: present
+   - "deb [arch=amd64] https://packages.microsoft.com/repos/code stable main"
+   - "deb [arch=amd64] https://packages.microsoft.com/repos/edge stable main"
+   - "deb [arch=amd64] https://packages.microsoft.com/repos/ms-teams stable main"
 
 - name: Run apt update
   apt:

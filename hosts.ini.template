@@ -1,2 +1,0 @@
-[ubuntu_clients]
-vm-test-01 ansible_host=10.0.0.16 ansible_connection=ssh ansible_user=ansible

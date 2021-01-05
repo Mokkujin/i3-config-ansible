@@ -3,6 +3,7 @@
 install an i3-wm (from repo) include and all other useful things ;)
 
 - [Requirements](#requirements)
+- [Styles](#styles)
 - [Monitor Resolution & Config](#monitor-resolution--config)
 - [Config Playbook](#config-playbook)
 - [Run Playbook](#runplaybook)
@@ -19,6 +20,26 @@ then install the openssh-server on your ubuntu.
 sudo apt install openssh-server
 ```
 configure key for ssh connection : https://www.ssh.com/ssh/keygen/
+
+<a name="styles"></a>
+##### Styles
+
+there are two types available installation with i3blocks or polybar
+
+**you have to choose this before you run the playbook the first time**
+
+group_vars/all.yml -> set install_polybar to true if you want the polybar
+
+there are diffrent style and configurations available : https://github.com/adi1090x/polybar-themes
+
+*Polybar*
+![alt text]( "Polybar with Templat hack")
+
+*i3blocks*
+![alt text]( "my i3blocks config i used for years ;-)")
+
+*tools*
+![alt text]( "styled applications")
 
 <a name="#monitor-resolution--config"></a>
 ##### Monitor Resolution & Config
