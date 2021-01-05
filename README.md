@@ -33,13 +33,13 @@ group_vars/all.yml -> set install_polybar to true if you want the polybar
 there are diffrent style and configurations available : https://github.com/adi1090x/polybar-themes
 
 *Polybar*
-![alt text]( "Polybar with Templat hack")
+![alt text](https://raw.githubusercontent.com/Mokkujin/i3-config-ansible/main/src_pic/polybar-00.png "Polybar with Template hack")
 
 *i3blocks*
-![alt text]( "my i3blocks config i used for years ;-)")
+![alt text](https://raw.githubusercontent.com/Mokkujin/i3-config-ansible/main/src_pic/i3block-00.png "my i3blocks config i used for years ;-)")
 
 *tools*
-![alt text]( "styled applications")
+![alt text](https://raw.githubusercontent.com/Mokkujin/i3-config-ansible/main/src_pic/tools-00.png "styled applications")
 
 <a name="#monitor-resolution--config"></a>
 ##### Monitor Resolution & Config
