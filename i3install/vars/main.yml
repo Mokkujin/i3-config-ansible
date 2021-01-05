@@ -13,6 +13,7 @@ i3_packages:
   - ncdu
   - lxappearance
   - pasystray
+  - x11-utils
  
 
 # REPOS & KEYS
