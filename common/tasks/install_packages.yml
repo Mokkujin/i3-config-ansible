@@ -40,7 +40,6 @@
     apt_key:
       url: "{{ repo_google_key }}"
       state: present
-
   - name: add google-chrome repo
     apt_repository:
         repo: "{{ repo_goggle_chrome }}"
@@ -51,7 +50,3 @@
       name: ['google-chrome-stable']
       state: present
   when: install_google_chrome | bool
-
-
-        
-# repo_google_key        wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
