@@ -157,7 +157,7 @@
 - block:
   - name: remove apport & whoopsie
     apt:
-      name: ['apport','apport-gtk','whoopsie']
+      name: ['ubuntu-report','popularity-contest','apport','apport-gtk','whoopsie']
       state: absent
   when: uninstall_apport | bool
 
