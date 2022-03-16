@@ -1,16 +1,16 @@
 ---
 
 # install and configure flatpak
-install_flatpak : true
+install_flatpak : false
 # Configure Your Primary Screen HERE ! otherwise the systray will not work !
 i3_screen_output: Virtual1
 i3_screen_resolution: 1440x900
 # install powerline if you want set to false if not (default: true)
-install_powerline: true
+install_powerline: false
 # install i3 gaps (default: true)
 install_i3_gaps: true
 # install wallpapers (default: false)
-install_wallpaper: false
+install_wallpaper: true
 # install nerdfonts (default is true ! if not installed the i3blocks show no icons ! if you rerun the playbook you could set to false) 
 install_nerdfonts: true
 # uninstall apport & whoopsie ? (default: true)

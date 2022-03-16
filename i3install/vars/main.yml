@@ -17,7 +17,8 @@ i3_packages:
  
 
 # REPOS & KEYS
-i3_repo_key: https://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2020.02.03_all.deb
+                      
+i3_repo_key: https://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2022.02.17_all.debE
 i3_repo: "deb [arch=amd64] http://debian.sur5r.net/i3/ focal universe"
 
 i3_gaps_build_packages:

@@ -14,7 +14,7 @@
 
 - name: install qogir themes
   shell: 
-    cmd: /tmp/qogir/install.sh -g -c dark -l ubuntu -t standard -i -d /usr/share/themes && touch /home/.qogirinstalled
+    cmd: /tmp/qogir/install.sh -g -c dark -l ubuntu -t all -d /usr/share/themes && touch /home/.qogirinstalled
     creates: /home/.qogirinstalled
 
 - name: git -> get qogir icons
