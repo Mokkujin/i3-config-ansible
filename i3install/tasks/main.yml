@@ -92,6 +92,25 @@
   shell:
     cmd: gsettings set org.gnome.gnome-flashback desktop false
 
+- name: disable desktop in gnome-flashback
+  become: no
+  shell: 
+    cmd: dconf write /org/gnome/gnome-flashback/desktop false && touch ~/.dconfdis
+    creates: ~/.dconfdis
+
+- name: do not show desktop icons on gnome desktop
+  become: no
+  shell:
+    cmd: gsettings set org.gnome.gnome-flashback.desktop show-icons false && touch ~/.gsnoicons
+    creates: ~/.gsnoicons
+
+- name: disable titlebar & menu in gnome-terminal
+  shell:
+    cmd: "gsettings {{ item }}"
+  with_items:
+    - set org.gnome.Terminal.Legacy.Settings headerbar false
+    - set org.gnome.Terminal.Legacy.Settings default-show-menubar false
+        
 - name: Enable Wallpapers
   become: no
   shell:
@@ -140,7 +159,6 @@
 - name: Set Monitor in Config from Vars
   become: no
   replace: 
-
     path: ~/.config/i3/config
     regexp: '(\s+)tray_output primary(\s+.*)?$'
     replace: "\n    tray_output {{ i3_screen_output }}\n"
@@ -180,3 +198,6 @@
 
 # install powerline
 - include: install-powerline.yml
+
+# install conky
+- include: conky.yml

@@ -1,0 +1,20 @@
+---
+
+- name: copy conky config file
+  copy:
+    src: MetroClock
+    dest: ~/.config/i3/scripts/
+
+- name: copy conky start file
+  copy:
+    src: run_conky.sh
+    dest: ~/.config/i3/scripts/
+
+- name: create entry in i3 config
+  become: no
+  blockinfile:
+    dest: ~/.config/i3/config
+    marker: '#-{mark}-CONKY'
+    insertbefore: '^(.*)i3 blocks key(.*)$'
+    block: |
+      exec_always --no-startup-id ~/.config/i3/scripts/run_conky.sh

@@ -1,0 +1,27 @@
+conky.config = {
+    update_interval = 60,
+    own_window = true,
+    own_window_class = 'Conky',
+    own_window_type = 'override',
+    double_buffer = true,
+    no_buffers = true,
+    text_buffer_size = 2048,
+    own_window_transparent = true,
+    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+    own_window_argb_value = 0,
+    own_window_argb_visual = true,
+    own_window_colour = '000000',
+    alignment = 'bottom_left',
+    gap_x = 50,
+    gap_y = 50,
+    use_xft = true,
+    xftalpha = 0,
+    uppercase = false,
+    override_utf8_locale = true,
+};
+
+
+conky.text = [[
+${voffset 10}${font Exo:size=200}${time %H:%M %p}${font}${voffset -10}
+${voffset 40}${offset 50}${font Codystar:size=20}${execpi 60 echo $(date '+%d.%m.%Y') } - ${time %A}${font}${voffset -10}
+]];

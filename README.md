@@ -124,6 +124,11 @@ you can run a grep command on the final file (client not host) to see all keybin
 ```bash
 grep bindsym ~/.config/i3/config
 ```
+
+<a name="example"></a>
+
+![alt text](https://raw.githubusercontent.com/Mokkujin/i3-config-ansible/main/src_pic/i3desktop.png "My I3 Desktop")
+
 <a name="thanks"></a>
 ##### Thanks
 
@@ -137,3 +142,4 @@ Tanks to the following repos :-)
 * https://github.com/powerline/fonts.git
 * https://github.com/sauvaget/i3-gnome.git
 * https://github.com/wfxr/tmux-power
+* https://github.com/wojtekl/Conky-Metro-Clock (complete refactored to conky 1.10 syntax)
